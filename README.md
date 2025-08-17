@@ -27,7 +27,7 @@ cd <repository_folder>
 npm install
 ```
 
-2. Create a `.env` file in the backend root directory with the following:
+2. Create a `.env` file in the root level of project with the following:
 
 ```env
 EMAIL_HOST=smtp.gmail.com
@@ -38,33 +38,46 @@ EMAIL_TO=author-email-here
 FRONTEND_URL=frontend-url-here
 ```
 
-3. Start Mail Service Locally:
-
-```bash
-npm run local
-```
-
-### Deploy to Vercel
-
-1. Install Vercel CLI (if not already installed):
+3. Install Vercel CLI (if not already installed):
 
 ```bash
 npm i -g vercel
 ```
 
-2. Login to Vercel:
+4. Start the Mail Service locally:
+
+```bash
+npm run local
+```
+
+### Test the locally running serverless API using `curl`:
+
+```bash
+curl -X POST https://localhost:3000/api/send-mail \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Anas",
+  "email": "visitor@example.com",
+  "company": "My Company",
+  "message": "Hello, testing the mail service!"
+}'
+```
+
+### Deploy to Vercel
+
+1. Login to Vercel:
 
 ```bash
 vercel login
 ```
 
-3. Deploy the project:
+2. Deploy the project:
 
 ```bash
 vercel --prod
 ```
 
-4. Set environment variables in **Vercel Dashboard → Project → Settings → Environment Variables**:
+3. Set environment variables in **Vercel Dashboard → Project → Settings → Environment Variables**:
 
 ```env
 EMAIL_HOST=smtp.gmail.com
@@ -84,7 +97,7 @@ curl -X POST https://your-vercel-project.vercel.app/api/send-mail \
   "name": "Anas",
   "email": "visitor@example.com",
   "company": "My Company",
-  "message": "Hello, testing the mail-service!"
+  "message": "Hello, testing the mail service!"
 }'
 ```
 
@@ -99,5 +112,6 @@ Expected Response:
 
 ### Notes
 
-- FRONTEND_URL must match your frontend origin to avoid CORS errors.  
-- Gmail requires **2FA + App Password** for serverless SMTP.  
+- `FRONTEND_URL` must match your frontend origin to avoid CORS errors.  
+- Gmail requires **2FA + App Password** for serverless SMTP.
+
